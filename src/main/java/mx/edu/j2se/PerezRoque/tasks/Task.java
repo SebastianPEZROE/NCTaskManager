@@ -70,7 +70,7 @@ public class Task {
     /**
      * this method change the time of the task and the status to
      * non repetitive task if it is a repetitive one
-     * @param time the sart time of the task
+     * @param time the start time of the task
      */
     public void setTime(int time){
         if (repeat){
@@ -119,12 +119,29 @@ public class Task {
      * @return the start time of the task, or -1 if the task is not executed.
      */
     public int nextTimeAfter(int current){
-        if ((current <= end) && ((end-current) > interval) ){
-            return start;
+        if (repeat && (current <= end) && ((end-current) > interval) ){
+            int execution = start;
+            while(current > execution){
+                execution += interval;
+            }
+            return execution;
+        }else if (!repeat && current <= time ) {
+            return time;
         }else{
-            repeat = false;
             return -1;
         }
     }
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "title='" + title + '\'' +
+                ", time=" + time +
+                ", start=" + start +
+                ", end=" + end +
+                ", interval=" + interval +
+                ", active=" + active +
+                ", repeat=" + repeat +
+                '}';
+    }
 }
