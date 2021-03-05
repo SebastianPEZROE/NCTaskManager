@@ -1,7 +1,7 @@
 package mx.edu.j2se.PerezRoque.evaluation;
 
 public class Evaluation1 {
-    public void main(){
+    public static void main(String[] args){
         try{
             Circle invalidCircle = new Circle(-10);
         }catch (Exception e){
@@ -20,7 +20,7 @@ public class Evaluation1 {
 
     }
 
-    private int biggestCircle(Circle[] array){
+    private static int biggestCircle(Circle[] array){
         double biggest = array[0].getRadius();
         int index = 0;
         for (int i = 1; i< array.length; i++){

@@ -12,8 +12,9 @@ public class Circle {
             throw new IllegalArgumentException(
                     "Radius should not be negative, try another value please"
             );
+        }else{
+            this.radius = radius;
         }
-        this.radius = radius;
     }
 
     public void setRadius(double radius) throws IllegalArgumentException{
@@ -21,8 +22,9 @@ public class Circle {
             throw new IllegalArgumentException(
                     "Radius should not be negative, try with a positive one"
             );
+        }else{
+            this.radius = radius;
         }
-        this.radius = radius;
     }
 
     public double getRadius(){
