@@ -25,6 +25,7 @@ public class Evaluation1 {
         int index = 0;
         for (int i = 1; i< array.length; i++){
             if (array[i].getRadius() > biggest ){
+                biggest = array[i].getRadius();
                 index = i;
             }
         }
