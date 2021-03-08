@@ -1,5 +1,7 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
+import javax.lang.model.type.NullType;
+
 /**
  * In this class are stored the tasks in arrays
  * and have methods to add more task, remove task from the list,
@@ -19,7 +21,12 @@ public class ArrayTaskList {
      * then set the task at the end of the array.
      * @param task is the object to be stored
      */
-    public void add(Task task){
+    public void add(Task task) throws NullPointerException {
+        if (task == null){
+            throw new NullPointerException(
+                    "Task object should not be null"
+            );
+        }
         elements++;
         listSize = new Task[elements];
         System.arraycopy(taskList,0,listSize,0,taskList.length);
@@ -57,8 +64,14 @@ public class ArrayTaskList {
         return taskList.length;
     }
 
-    public Task getTask(int index){
-        return ((taskList.length > index) ? taskList[index] : null);
+    public Task getTask(int index) throws IndexOutOfBoundsException{
+        try {
+            return taskList[index];
+        }catch (Exception e){
+            throw new IndexOutOfBoundsException(
+                    "Index should not be negative neither greater than the number of tasks that contains, please"
+            );
+        }
     }
 
     /**

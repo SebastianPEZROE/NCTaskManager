@@ -22,7 +22,12 @@ public class Task {
      * @param title is the value to set the reference
      * @param time is the value to set the star time
      */
-    public Task(String title, int time){
+    public Task (String title, int time) throws IllegalArgumentException{
+        if (time < 0) {
+            throw new IllegalArgumentException(
+                    "Time should not be negative"
+            );
+        }
         this.title = title;
         this.time = time;
         active = false;
@@ -38,7 +43,20 @@ public class Task {
      * @param end is the value to set the end time
      * @param interval time between each task
      */
-    public Task(String title, int start, int end, int interval){
+    public Task(String title, int start, int end, int interval) throws IllegalArgumentException{
+        if (start<0 || end< 0){
+            throw new IllegalArgumentException("time should not be negative");
+        }
+        if (end < start){
+            throw new IllegalArgumentException(
+                    "End time should be greater than start time"
+            );
+        }
+        if (interval <= 0){
+            throw new IllegalArgumentException(
+                    "Interval should not be zero neither negative"
+            );
+        }
         this.title = title;
         this.start = start;
         this.end = end;
@@ -72,7 +90,12 @@ public class Task {
      * non repetitive task if it is a repetitive one
      * @param time the start time of the task
      */
-    public void setTime(int time){
+    public void setTime(int time)throws IllegalArgumentException{
+        if(time < 0){
+            throw new IllegalArgumentException(
+                    "time should not be negative"
+            );
+        }
         if (repeat){
             repeat = false;
         }
@@ -98,7 +121,22 @@ public class Task {
      * @param end the end time of the task.
      * @param interval time between each repetition.
      */
-    public void setTime(int start, int end, int interval){
+    public void setTime(int start, int end, int interval) throws IllegalArgumentException {
+        if ((start < 0) || (end < 0)){
+            throw new IllegalArgumentException(
+                    "Time should not be negative"
+            );
+        }
+        if (end < start){
+            throw new IllegalArgumentException(
+                    "End time should be greater than start time"
+            );
+        }
+        if (interval <=0 ){
+            throw new IllegalArgumentException(
+                    "Interval should not be zero neither negative"
+            );
+        }
         if (!repeat){
             repeat = true;
         }

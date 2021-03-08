@@ -47,7 +47,7 @@ public class Main {
 		task3.setActive(false);
 		Task task4 = new Task("get wear", 11);
 		Task task5 = new Task("break fast", 12, 72, 24);
-		task5.setActive(false);
+		task5.setActive(true);
 		ArrayTaskList list1 = new ArrayTaskList();
 		list1.add(task1);
 		list1.add(task2);
@@ -68,12 +68,30 @@ public class Main {
 
 		//ArrayTaskList list2; //new ArrayTaskList();
 		//list2 =
-		System.out.println(list1.incoming(5,8).size());
-		System.out.println(list1.incoming(5,8).getTask(0));
+		//System.out.println(list1.incoming(5,8).size());
+		//System.out.println(list1.incoming(5,8).getTask(0));
 		//System.out.println(list2.size());
 		//System.out.println(list2.getTask(3));
 
+		//Task task1000 = new Task("get out", -2000);
+		//System.out.println(task1000.getEndTime());
 
+		LinkedTaskList list = new LinkedTaskList();
+		//list.add(task1);
+		//list.add(task2);
+		//list.add(task3);
+		//list.add(task4);
+		//list.add(task5);
+		//list.cual_es();
+		System.out.println(list.size());
+
+		System.out.println(list.remove(task5));
+		list.remove(task2);
+
+		System.out.println(list.size());
+		//System.out.println(list.getTask(1));
+		list.add(task5);
+		System.out.println(list.incoming(4,15).size());
 
 	}
 }
