@@ -1,6 +1,5 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
-import javax.lang.model.type.NullType;
 
 /**
  * In this class are stored the tasks in arrays
@@ -8,7 +7,7 @@ import javax.lang.model.type.NullType;
  * to know which task are and how many are they, as well as,
  * a list that store tasks in a range of time. *
  */
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList{
     private int elements = 0;
     private Task[] taskList = new Task[elements];
     private Task[] listSize;
@@ -64,7 +63,7 @@ public class ArrayTaskList {
         return taskList.length;
     }
 
-    public Task getTask(int index) throws IndexOutOfBoundsException{
+    public Task getTask(int index) {
         try {
             return taskList[index];
         }catch (Exception e){
@@ -94,5 +93,4 @@ public class ArrayTaskList {
         }
         return coming_soon;
     }
-
 }

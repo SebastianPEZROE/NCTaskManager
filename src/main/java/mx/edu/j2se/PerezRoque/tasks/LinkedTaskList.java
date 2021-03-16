@@ -8,7 +8,7 @@ package mx.edu.j2se.PerezRoque.tasks;
  * count them and even give another LinkedTaskList with tasks in a
  * range of time.
  */
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList{
     private Node node;      //are the rest nodes in the list
     private Node head;      //is the begging  node of the list
 
@@ -41,6 +41,7 @@ public class LinkedTaskList {
      * @param task is the pointer to be stored
      * @throws NullPointerException if task is null
      */
+    @Override
     public void add (Task task)throws NullPointerException{
         if(task ==null){
             throw new NullPointerException(
@@ -151,5 +152,4 @@ public class LinkedTaskList {
         }
         return coming_soon;
     }
-
 }

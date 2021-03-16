@@ -2,7 +2,7 @@ package mx.edu.j2se.PerezRoque.tasks;
 
 public class Main {
 	public static void main(String[] args) {
-		Persona estudiante = new Persona();
+		/*Persona estudiante = new Persona();
 		estudiante.setNombre("Eduardo");
 		estudiante.setEdad(18);
 		String simon = estudiante.esLegal();
@@ -92,6 +92,31 @@ public class Main {
 		//System.out.println(list.getTask(1));
 		list.add(task5);
 		System.out.println(list.incoming(4,15).size());
+		//String val = "ARRAY";
+		AbstractTaskList A_list = TaskListFactory.createTaskList( ListTypes.types.ARRAY);
+		A_list.add(task1);
+		A_list.add(task2);
+		A_list.add(task1);
+		A_list.add(task3);
+		A_list.add(task4);
+		A_list.remove(task1);
+		A_list.add(task5);
+		System.out.println(A_list.size());
+		System.out.println(A_list.incoming(0,100));
+
+		AbstractTaskList L_list = TaskListFactory.createTaskList(ListTypes.types.LINKED);
+		L_list.add(task1);
+		L_list.add(task2);
+		L_list.add(task3);
+		L_list.add(task4);
+		L_list.add(task5);
+		L_list.add(task2);
+
+		System.out.println(L_list.size());
+		L_list.remove(task2);
+		System.out.println(L_list.getTask(4));
+		System.out.println(L_list.incoming(0,100));
+		System.out.println(A_list.incoming(0,100));*/
 
 	}
 }
