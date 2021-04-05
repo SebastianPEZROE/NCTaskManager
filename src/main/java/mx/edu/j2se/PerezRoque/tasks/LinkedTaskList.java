@@ -1,5 +1,8 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
+import java.util.Iterator;
+import java.util.Objects;
+
 /**
  * This class works the same way that ArrayTaskList class.
  * It's another form to store tasks in a "list", this list is like
@@ -11,6 +14,7 @@ package mx.edu.j2se.PerezRoque.tasks;
 public class LinkedTaskList extends AbstractTaskList{
     private Node node;      //are the rest nodes in the list
     private Node head;      //is the begging  node of the list
+    public int size = 0;
 
     /**
      * This class is used to create a node or box where
@@ -60,6 +64,7 @@ public class LinkedTaskList extends AbstractTaskList{
             }
             current_node.next = new Node(task);
         }
+        size ++;
     }
 
     /**
@@ -77,6 +82,7 @@ public class LinkedTaskList extends AbstractTaskList{
                 //falta eliminar el objeto,solo se esta sacando del linkedlist pero no se esta eliminando
                 head = head.next;
                 deleted = true;
+                size--;
             } else {
                 Node current_node = head;
                 while (current_node.next != null) {
@@ -84,6 +90,7 @@ public class LinkedTaskList extends AbstractTaskList{
                         //eliminar el objeto
                         current_node.next = current_node.next.next;
                         deleted = true;
+                        size--;
                         break;
                     }
                     current_node = current_node.next;
@@ -96,17 +103,7 @@ public class LinkedTaskList extends AbstractTaskList{
     }
 
     public int size(){
-        return count(head);
-    }
-
-    private int count(Node head){
-        if (head ==null){
-            return 0;
-        }
-        if (head.next ==null){
-            return 1;
-        }
-        return 1+ count(head.next);
+        return size;
     }
 
     /**
@@ -116,7 +113,7 @@ public class LinkedTaskList extends AbstractTaskList{
      * @throws IndexOutOfBoundsException if the index is negative or bigger than the number of tasks.
      */
     public Task getTask(int index)throws IndexOutOfBoundsException{
-        if (index <0 || index >= count(head)){
+        if (index <0 || index >= size){
             throw new IndexOutOfBoundsException(
                     "index should not be negative neither bigger than the number of tasks it contains"
             );
@@ -152,4 +149,74 @@ public class LinkedTaskList extends AbstractTaskList{
         }
         return coming_soon;
     }
+
+    @Override
+    public Iterator<Task> iterator(){
+        return new itr();
+    }
+
+    private class itr implements Iterator<Task>{
+        private int cursor = 0;
+        private Node next = head;
+        private Node last_returned;
+
+        @Override
+        public boolean hasNext() {
+            return cursor < size();
+        }
+
+        @Override
+        public Task next() {
+            last_returned = next;
+            next = next.next;
+            cursor ++;
+            return last_returned.taskStoring;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LinkedTaskList tasks = (LinkedTaskList) o;
+
+        if(size()== tasks.size()){
+            boolean e;
+            Node other = tasks.head;
+            for(Node n = head; n != null; n= n.next){
+                e= n.taskStoring.equals(other.taskStoring);
+                if (!e){
+                    return false;
+                }
+                other = other.next;
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(node, head);
+    }
+
+    @Override
+    public String toString() {
+        return "LinkedTaskList{" +
+                "head=" + head +
+                ", next node=" + node +
+                '}';
+    }
+
+    @Override
+    public LinkedTaskList cloning(){
+        LinkedTaskList c = new LinkedTaskList();
+        for(Node n = head; n != null; n= n.next){
+            c.add(n.taskStoring);
+        }
+        return c;
+    }
 }
+
+

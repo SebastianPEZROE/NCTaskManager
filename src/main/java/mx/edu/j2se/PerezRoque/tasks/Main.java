@@ -48,7 +48,7 @@ public class Main {
 		Task task4 = new Task("get wear", 11);
 		Task task5 = new Task("break fast", 12, 72, 24);
 		task5.setActive(true);
-		ArrayTaskList list1 = new ArrayTaskList();
+------>	ArrayTaskList list1 = new ArrayTaskList();
 		list1.add(task1);
 		list1.add(task2);
 		list1.add(task3);
@@ -76,7 +76,7 @@ public class Main {
 		//Task task1000 = new Task("get out", -2000);
 		//System.out.println(task1000.getEndTime());
 
-		LinkedTaskList list = new LinkedTaskList();
+------>	LinkedTaskList list = new LinkedTaskList();
 		//list.add(task1);
 		//list.add(task2);
 		//list.add(task3);
@@ -93,7 +93,7 @@ public class Main {
 		list.add(task5);
 		System.out.println(list.incoming(4,15).size());
 		//String val = "ARRAY";
-		AbstractTaskList A_list = TaskListFactory.createTaskList( ListTypes.types.ARRAY);
+----->	AbstractTaskList A_list = TaskListFactory.createTaskList( ListTypes.types.ARRAY);
 		A_list.add(task1);
 		A_list.add(task2);
 		A_list.add(task1);
@@ -117,6 +117,51 @@ public class Main {
 		System.out.println(L_list.getTask(4));
 		System.out.println(L_list.incoming(0,100));
 		System.out.println(A_list.incoming(0,100));*/
+//equals
+/*--->*//*Task task1 = new Task("task 1",7, 12,3);
+		Task task2 = new Task("task 222",7);
+		task2.setTime(7,12,3);
+		System.out.println(task1.equals(task2));
+		System.out.println(task1.hashCode());
+		System.out.println(task2.hashCode());
+		System.out.println(task1.toString());
+		task2.setTime(4);*/
+
+		/*AbstractTaskList L_list = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
+		L_list.add(task1);
+		L_list.add(task2);
+		AbstractTaskList L_list1 = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
+		L_list1.add(task1);
+		L_list1.add(task1);
+		System.out.println(L_list.equals(L_list1));
+		System.out.println(L_list.toString());
+
+		ArrayTaskList g = (ArrayTaskList) L_list.cloning();
+		System.out.println(g.toString());*/
+
+		/*AbstractTaskList L = TaskListFactory.createTaskList(ListTypes.types.LINKED);
+		L.add(task1);
+		L.add(task2);
+		AbstractTaskList L2 = TaskListFactory.createTaskList(ListTypes.types.LINKED);
+		L2.add(task1);
+		L2.add(task2);
+		L2.add(task1);
+		L2.add(task1);
+		L2.add(task2);
+		L2.add(task1);
+		L2.remove(task2);
+		L2.remove(task1);
+		System.out.println(L.equals(L2));
+
+		LinkedTaskList w = (LinkedTaskList) L.cloning();
+		System.out.println(L.toString());
+		System.out.println(w.toString());
+
+		Task r = task1.clone();
+		System.out.println(r.toString());
+
+		System.out.println(L2.size());*/
+
 
 	}
 }

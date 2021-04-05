@@ -1,5 +1,7 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
+import java.util.Objects;
+
 /**
  *  In this class are declare all the tasks,
  *  which is the main function of the application. Here are the
@@ -100,6 +102,9 @@ public class Task {
             repeat = false;
         }
         this.time = time;
+        this.start = 0;
+        this.end = 0;
+        this.interval = 0;
     }
 
     public int getStartTime(){
@@ -140,6 +145,7 @@ public class Task {
         if (!repeat){
             repeat = true;
         }
+        this.time = 0;
         this.start = start;
         this.end = end;
         this.interval = interval;
@@ -157,17 +163,30 @@ public class Task {
      * @return the start time of the task, or -1 if the task is not executed.
      */
     public int nextTimeAfter(int current){
-        if (repeat && (current <= end) && ((end-current) > interval) ){
+        if (active && repeat && (current <= end) && ((end-current) > interval) ){
             int execution = start;
             while(current > execution){
                 execution += interval;
             }
             return execution;
-        }else if (!repeat && current <= time ) {
+        }else if (active && !repeat && current <= time ) {
             return time;
         }else{
             return -1;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return time == task.time && start == task.start && end == task.end && interval == task.interval && repeat == task.repeat && Objects.equals(title, task.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, time, start, end, interval, repeat);
     }
 
     @Override
@@ -182,4 +201,10 @@ public class Task {
                 ", repeat=" + repeat +
                 '}';
     }
+
+    @Override
+    public Task clone(){
+        return this;
+    }
+
 }

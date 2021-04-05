@@ -1,5 +1,8 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * In this class are stored the tasks in arrays
@@ -80,7 +83,7 @@ public class ArrayTaskList extends AbstractTaskList{
      *
      * @param from where starts the range of time.
      * @param to where the range of time ends.
-     * @return a list of taks that are in the range of time.
+     * @return a list of tasks that are in the range of time.
      */
     public ArrayTaskList incoming(int from, int to){
         ArrayTaskList coming_soon = new ArrayTaskList();
@@ -92,5 +95,59 @@ public class ArrayTaskList extends AbstractTaskList{
             }
         }
         return coming_soon;
+    }
+
+    @Override
+    public Iterator<Task> iterator(){
+        return new itr();
+    }
+
+    private class itr implements Iterator<Task>{
+        private int cursor = 0;
+        private int previous = -1;
+
+        @Override
+        public boolean hasNext() {
+            return (cursor < elements);
+        }
+
+        @Override
+        public Task next() {
+            previous = cursor;
+            cursor += 1;
+            return (cursor < elements ? taskList[previous] : null);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrayTaskList tasks = (ArrayTaskList) o;
+        return elements == tasks.elements && Arrays.equals(taskList, tasks.taskList);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(elements);
+        result = 31 * result + Arrays.hashCode(taskList);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayTaskList{" +
+                "elements=" + elements +
+                ", taskList=" + Arrays.toString(taskList) +
+                '}';
+    }
+
+    @Override
+    public ArrayTaskList cloning() {
+        ArrayTaskList c = new ArrayTaskList();
+        for(Task t: taskList){
+            c.add(t);
+        }
+        return c;
     }
 }
