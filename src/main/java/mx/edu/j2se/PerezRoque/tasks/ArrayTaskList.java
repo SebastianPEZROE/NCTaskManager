@@ -3,6 +3,7 @@ package mx.edu.j2se.PerezRoque.tasks;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * In this class are stored the tasks in arrays
@@ -76,27 +77,6 @@ public class ArrayTaskList extends AbstractTaskList{
         }
     }
 
-    /**
-     * This method returns a subset of tasks that are scheduled
-     * for execution at least once after the "from" time, and
-     * not later than the "to" time.
-     *
-     * @param from where starts the range of time.
-     * @param to where the range of time ends.
-     * @return a list of tasks that are in the range of time.
-     */
-    public ArrayTaskList incoming(int from, int to){
-        ArrayTaskList coming_soon = new ArrayTaskList();
-        for(int i = 0; i< taskList.length;i++){
-            if (taskList[i].isActive()){
-                if (taskList[i].nextTimeAfter(from) >= from && taskList[i].nextTimeAfter(from) <= to){
-                    coming_soon.add(taskList[i]);
-                }
-            }
-        }
-        return coming_soon;
-    }
-
     @Override
     public Iterator<Task> iterator(){
         return new itr();
@@ -150,4 +130,10 @@ public class ArrayTaskList extends AbstractTaskList{
         }
         return c;
     }
+
+    @Override
+    public Stream<Task> getStream(){
+        return Stream.of(taskList);
+    }
+
 }

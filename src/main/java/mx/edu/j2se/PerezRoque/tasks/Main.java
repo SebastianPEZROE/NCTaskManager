@@ -118,28 +118,28 @@ public class Main {
 		System.out.println(L_list.incoming(0,100));
 		System.out.println(A_list.incoming(0,100));*/
 //equals
-/*--->*//*Task task1 = new Task("task 1",7, 12,3);
+/*--->*/Task task1 = new Task("task 1",7, 12,3);
 		Task task2 = new Task("task 222",7);
 		task2.setTime(7,12,3);
-		System.out.println(task1.equals(task2));
-		System.out.println(task1.hashCode());
-		System.out.println(task2.hashCode());
-		System.out.println(task1.toString());
-		task2.setTime(4);*/
+		//System.out.println(task1.equals(task2));
+		//System.out.println(task1.hashCode());
+		//System.out.println(task2.hashCode());
+		//System.out.println(task1.toString());
+		task2.setTime(4);
 
-		/*AbstractTaskList L_list = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
+		AbstractTaskList L_list = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
 		L_list.add(task1);
 		L_list.add(task2);
 		AbstractTaskList L_list1 = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
 		L_list1.add(task1);
 		L_list1.add(task1);
-		System.out.println(L_list.equals(L_list1));
-		System.out.println(L_list.toString());
+		//System.out.println(L_list.equals(L_list1));
+		//System.out.println(L_list.toString());
 
 		ArrayTaskList g = (ArrayTaskList) L_list.cloning();
-		System.out.println(g.toString());*/
+		//System.out.println(g.toString());
 
-		/*AbstractTaskList L = TaskListFactory.createTaskList(ListTypes.types.LINKED);
+		AbstractTaskList L = TaskListFactory.createTaskList(ListTypes.types.LINKED);
 		L.add(task1);
 		L.add(task2);
 		AbstractTaskList L2 = TaskListFactory.createTaskList(ListTypes.types.LINKED);
@@ -151,17 +151,30 @@ public class Main {
 		L2.add(task1);
 		L2.remove(task2);
 		L2.remove(task1);
-		System.out.println(L.equals(L2));
+		//System.out.println(L.equals(L2));
 
 		LinkedTaskList w = (LinkedTaskList) L.cloning();
-		System.out.println(L.toString());
-		System.out.println(w.toString());
+		//System.out.println(L.toString());
+		//System.out.println(w.toString());
 
-		Task r = task1.clone();
-		System.out.println(r.toString());
+		Task r = (Task) task1.clone();
+		//System.out.println(r.toString());
 
-		System.out.println(L2.size());*/
+		//System.out.println(L2.size());
 
+		task2.setActive(true);
+		task1.setActive(true);
+		Task task3 = new Task("el task", 80);
+		L_list.add(task3);
+		L_list.add(task2);
+		task3.setActive(true);
+		//System.out.println(L_list.size());
+		//L_list.getStream().filter(element -> element.isActive()).forEach(System.out::println);
+		//L.getStream().filter(Task::isActive).forEach(System.out::println);
+		L.incoming(4,7).getStream().forEach(System.out::println);
+		L_list.incoming(5,8);
+		L_list1.incoming(0,0);
+		L2.incoming(0,0);
 
 	}
 }

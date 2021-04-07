@@ -2,6 +2,7 @@ package mx.edu.j2se.PerezRoque.tasks;
 
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * This class works the same way that ArrayTaskList class.
@@ -127,29 +128,6 @@ public class LinkedTaskList extends AbstractTaskList{
         return current_node.taskStoring;
     }
 
-    /**
-     * Create a LinkedTaskList that stores the tasks which are going
-     * to be executed in a range of time.
-     * @param from is the start time of range
-     * @param to is the end time of the range
-     * @return a linkedTaskList which contains the tasks that will be
-     *         executed in the range of time
-     */
-    public LinkedTaskList incoming(int from, int to){
-        LinkedTaskList coming_soon = new LinkedTaskList();
-        Node current_node = head;
-        while(current_node != null){
-            if (current_node.taskStoring.isActive()){
-                if ((current_node.taskStoring.nextTimeAfter(from) >= from) &&
-                        (current_node.taskStoring.nextTimeAfter(from) <= to)){
-                    coming_soon.add(current_node.taskStoring);
-                }
-            }
-            current_node = current_node.next;
-        }
-        return coming_soon;
-    }
-
     @Override
     public Iterator<Task> iterator(){
         return new itr();
@@ -217,6 +195,23 @@ public class LinkedTaskList extends AbstractTaskList{
         }
         return c;
     }
+
+    private Task[] toArray(){
+        Task[] out = new Task[size];
+        int i = 0;
+        for (Node n = head; n!= null; n= n.next){
+            out[i] = n.taskStoring;
+            i++;
+        }
+        return out;
+    }
+
+    @Override
+    public Stream<Task> getStream(){
+        Task [] toStream = toArray();
+        return Stream.of(toStream);
+    }
+
 }
 
 
