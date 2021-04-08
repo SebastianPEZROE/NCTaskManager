@@ -146,9 +146,9 @@ public class LinkedTaskList extends AbstractTaskList{
         @Override
         public Task next() {
             last_returned = next;
-            next = next.next;
+            next = (hasNext() ? next.next : next);
             cursor ++;
-            return last_returned.taskStoring;
+            return (cursor <= size() ? last_returned.taskStoring : null);
         }
     }
 

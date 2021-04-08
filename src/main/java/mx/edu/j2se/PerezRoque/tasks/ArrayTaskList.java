@@ -94,8 +94,8 @@ public class ArrayTaskList extends AbstractTaskList{
         @Override
         public Task next() {
             previous = cursor;
-            cursor += 1;
-            return (cursor < elements ? taskList[previous] : null);
+            cursor ++;
+            return (cursor <= elements ? taskList[previous] : null);
         }
     }
 
