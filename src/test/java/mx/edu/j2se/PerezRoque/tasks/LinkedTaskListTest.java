@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 public class LinkedTaskListTest {
 
-    @Test
+    /*@Test
     public void addAndgetTaskTest() throws Exception{
         Task t1 = new Task("t1", 10);
         Task t2 = new Task("t2", 18);
@@ -96,5 +96,5 @@ public class LinkedTaskListTest {
         LinkedTaskList a3 = a2.cloning();
         Assert.assertEquals(a3,a2);
     }
-
+*/
 }

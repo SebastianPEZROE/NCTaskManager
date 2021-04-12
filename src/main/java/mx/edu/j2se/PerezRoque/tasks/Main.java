@@ -1,5 +1,15 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
+import javafx.util.converter.LocalTimeStringConverter;
+
+import java.time.*;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
+import java.util.Set;
+import java.util.SortedMap;
+
 public class Main {
 	public static void main(String[] args) {
 		/*Persona estudiante = new Persona();
@@ -118,7 +128,7 @@ public class Main {
 		System.out.println(L_list.incoming(0,100));
 		System.out.println(A_list.incoming(0,100));*/
 //equals
-/*--->*/Task task1 = new Task("task 1",7, 12,3);
+/*--->*//*Task task1 = new Task("task 1",7, 12,3);
 		Task task2 = new Task("task 222",7);
 		task2.setTime(7,12,3);
 		//System.out.println(task1.equals(task2));
@@ -175,6 +185,70 @@ public class Main {
 		L_list.incoming(5,8);
 		L_list1.incoming(0,0);
 		L2.incoming(0,0);
+
+		LocalDate time = LocalDate.of(2070, 12,29);
+		LocalDateTime t = LocalDateTime.of(2020,2,8,3,30);
+		System.out.println(time);
+		System.out.println(t);
+		System.out.println(LocalDateTime.now());
+		System.out.println(t.isBefore(LocalDateTime.now()));
+
+		Iterable<Task> c= L;//TaskListFactory.createTaskList(ListTypes.types.LINKED);
+		//c.forEach(System.out::println);
+
+		Iterable<Task> i = Tasks.incoming(c,t,t);
+		*/
+
+		/*LocalDateTime time1 = LocalDateTime.of(2022,8,24,16,0,0);
+		LocalDateTime start_time2 = LocalDateTime.of(2022,3,1,8,15);
+		LocalDateTime end_time2 = LocalDateTime.of(2022,9,1,8,15,0);
+		LocalDateTime interval2 = LocalDateTime.of(0,1,1,6,0,0,0);
+		LocalDateTime start_time3 = LocalDateTime.of(2022,8,20,8,15,0);
+		LocalDateTime end_time3 = LocalDateTime.of(2022,8,28,8,15,0);
+		LocalDateTime interval3 = LocalDateTime.of(0,1,1,12,0);
+		LocalDateTime time3 = LocalDateTime.of(2022,9,1,18,0,0);
+		//falta que el intervalo sea menor aun mes y un dia
+		//que el comienzo mas el intervalo no sea mayor al fin
+		//checar  restricciones de next time after
+		//checar las ecepciones de task
+		//poner exepciones en todo lo demas
+		//lo que siga saliendo, hay que checar todo
+		Task t1 = new Task("Lunch with a beautiful girl", time1);
+		Task t2 = new Task("Morning run", start_time2,end_time2,interval2);
+		Task t3 = new Task("Taking medication", start_time3,end_time3,interval3);
+		Task t4 = new Task("Meeting with friends", time3);
+		t1.setActive(true);
+		t2.setActive(true);
+		t3.setActive(true);
+		t4.setActive(true);
+
+		AbstractTaskList h = TaskListFactory.createTaskList(ListTypes.types.LINKED);
+		h.add(t1);
+		h.add(t2);
+		h.add(t3);
+		h.add(t4);
+		LocalDateTime current_s = LocalDateTime.of(2022,8,25,8,0,0);
+		LocalDateTime current_e = LocalDateTime.of(2022,8,25,15,0,0);
+
+		Iterable<Task> u = h;
+		//Iterable<Task> i = Tasks.incoming(u, current, end_time );
+		//System.out.println(i);
+
+		SortedMap<LocalDateTime, Set<Task>> d = Tasks.calendar(u,current_s,current_e);
+		d.keySet().forEach(element->System.out.println("date: " + element +
+				", number of tasks: " + d.get(element).size() +
+				", Tasks: " + d.get(element) ));
+		//System.out.println(d);
+		DateTimeFormatter g = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:ns");
+		String v = start_time3.format(g);
+		//System.out.println(v);
+
+		long r = ChronoUnit.MINUTES.between(start_time3, end_time3);
+
+		//System.out.println(r);
+		LocalDateTime p =start_time3.plusMinutes(r);
+		//System.out.println(p);*/
+
 
 	}
 }

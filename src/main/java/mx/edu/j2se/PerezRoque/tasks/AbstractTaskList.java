@@ -16,22 +16,4 @@ abstract class AbstractTaskList implements Iterable<Task>{
     public abstract AbstractTaskList cloning();
     public abstract Stream<Task> getStream();
 
-    /**
-     * this methods return a subset of task that are
-     * schedule in a range of time.
-     * @param from the start time of the range
-     * @param to the end time of the range
-     * @return an AbstractTaskList of the same type of instance.
-     */
-    public final AbstractTaskList incoming(int from, int to){
-        AbstractTaskList coming_soon = (this instanceof ArrayTaskList) ?
-                new ArrayTaskList() :
-                new LinkedTaskList();
-        this.getStream().
-                filter(Task::isActive).
-                filter(element -> (element.nextTimeAfter(from) >= from && element.nextTimeAfter(from) <= to)).
-                forEach(coming_soon::add);
-        return coming_soon;
-    }
-
 }

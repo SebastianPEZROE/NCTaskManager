@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class TaskListFactoryTest {
 
-    @Test
+   /* @Test
     public void buildingArrayTasListTest() throws Exception{
         Task t1 = new Task("t1", 10);
         Task t2 = new Task("t2", 18);
@@ -68,6 +68,6 @@ public class TaskListFactoryTest {
         AbstractTaskList aa2 = al.cloning();
         Assert.assertEquals(aa2,al);
         Assert.assertTrue(aa2.equals(al));
-    }
+    }*/
 
 }

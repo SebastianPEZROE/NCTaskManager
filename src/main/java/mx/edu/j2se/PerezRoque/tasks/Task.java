@@ -1,5 +1,8 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAmount;
 import java.util.Objects;
 
 /**
@@ -10,10 +13,10 @@ import java.util.Objects;
  */
 public class Task {
     private String title;       //reference of the task
-    private int time;           //start time of non repetitive tasks
-    private int start;          //start time of repetitive tasks
-    private int end;            //end time of repetitive tasks
-    private int interval;       //time between each task for repetitive ones
+    private LocalDateTime time;           //start time of non repetitive tasks
+    private LocalDateTime start;          //start time of repetitive tasks
+    private LocalDateTime end;            //end time of repetitive tasks
+    private LocalDateTime interval;       //time between each task for repetitive ones
     private boolean active;     //status of the task
     private boolean repeat;     //define if the task is going to be repeat
 
@@ -24,10 +27,15 @@ public class Task {
      * @param title is the value to set the reference
      * @param time is the value to set the star time
      */
-    public Task (String title, int time) throws IllegalArgumentException{
-        if (time < 0) {
+    public Task (String title, LocalDateTime time) throws IllegalArgumentException{
+        if (time.getYear() <= 0) {
             throw new IllegalArgumentException(
-                    "Time should not be negative"
+                    "Year should not be negative or zero"
+            );
+        }
+        if(time.isBefore(LocalDateTime.now())){
+            throw new IllegalArgumentException(
+                    "Time should be after now"
             );
         }
         this.title = title;
@@ -45,20 +53,21 @@ public class Task {
      * @param end is the value to set the end time
      * @param interval time between each task
      */
-    public Task(String title, int start, int end, int interval) throws IllegalArgumentException{
-        if (start<0 || end< 0){
-            throw new IllegalArgumentException("time should not be negative");
-        }
-        if (end < start){
+    public Task(String title, LocalDateTime start, LocalDateTime end, LocalDateTime interval) throws IllegalArgumentException{
+        if (end.isBefore(start)){
             throw new IllegalArgumentException(
                     "End time should be greater than start time"
             );
         }
-        if (interval <= 0){
+        if (end.getYear()<= 0 || start.getYear()<= 0){
             throw new IllegalArgumentException(
-                    "Interval should not be zero neither negative"
+                    "Year should not be negative or zero"
             );
         }
+        if (start.isBefore(LocalDateTime.now()) || end.isBefore(LocalDateTime.now())){
+            throw new IllegalArgumentException("Time should be after now");
+        }
+        //falata la excepcion para que el intervalo no sea Zero
         this.title = title;
         this.start = start;
         this.end = end;
@@ -83,7 +92,7 @@ public class Task {
         this.active = active;
     }
 
-    public int getTime(){
+    public LocalDateTime getTime(){
         return (repeat ? start : time);
     }
 
@@ -92,31 +101,37 @@ public class Task {
      * non repetitive task if it is a repetitive one
      * @param time the start time of the task
      */
-    public void setTime(int time)throws IllegalArgumentException{
-        if(time < 0){
+    public void setTime(LocalDateTime time)throws IllegalArgumentException{
+        if(time.isBefore(LocalDateTime.now())){
             throw new IllegalArgumentException(
-                    "time should not be negative"
+                    "Time should be after now"
+            );
+        }
+        if (time.getYear() <= 0) {
+            throw new IllegalArgumentException(
+                    "Year should not be negative or zero"
             );
         }
         if (repeat){
             repeat = false;
         }
-        this.time = time;
-        this.start = 0;
-        this.end = 0;
-        this.interval = 0;
+        LocalDateTime new_time = time;
+        this.time = new_time;
+        this.start = null;
+        this.end = null;
+        this.interval = null;
     }
 
-    public int getStartTime(){
+    public LocalDateTime getStartTime(){
         return (!repeat ? time : start);
     }
 
-    public int getEndTime(){
+    public LocalDateTime getEndTime(){
         return (!repeat ? time : end);
     }
 
-    public int getRepeatInterval(){
-        return (!repeat ? 0 : interval);
+    public LocalDateTime getRepeatInterval(){
+        return (!repeat ? null : interval);
     }
 
     /**
@@ -126,29 +141,34 @@ public class Task {
      * @param end the end time of the task.
      * @param interval time between each repetition.
      */
-    public void setTime(int start, int end, int interval) throws IllegalArgumentException {
-        if ((start < 0) || (end < 0)){
+    public void setTime(LocalDateTime start, LocalDateTime end, LocalDateTime interval) throws IllegalArgumentException {
+        if ((start.isBefore(LocalDateTime.now())) || (end.isBefore(LocalDateTime.now()))){
             throw new IllegalArgumentException(
-                    "Time should not be negative"
+                    "Time should be after now"
             );
         }
-        if (end < start){
+        if (end.isBefore(start)){
             throw new IllegalArgumentException(
                     "End time should be greater than start time"
             );
         }
-        if (interval <=0 ){
+        if (end.getYear()<= 0 || start.getYear()<= 0){
             throw new IllegalArgumentException(
-                    "Interval should not be zero neither negative"
+                    "year should not be negative or zero"
             );
         }
+        //is missing interval zero exception
         if (!repeat){
             repeat = true;
         }
-        this.time = 0;
-        this.start = start;
-        this.end = end;
-        this.interval = interval;
+        LocalDateTime new_start = start;
+        LocalDateTime new_end = end;
+        LocalDateTime new_interval = interval;
+
+        this.time = null;
+        this.start = new_start;
+        this.end = new_end;
+        this.interval = new_interval;
     }
 
     public boolean isRepeated(){
@@ -162,17 +182,24 @@ public class Task {
      * @param current current time.
      * @return the start time of the task, or -1 if the task is not executed.
      */
-    public int nextTimeAfter(int current){
-        if (active && repeat && (current <= end) && ((end-current) > interval) ){
-            int execution = start;
-            while(current > execution){
-                execution += interval;
+    public LocalDateTime nextTimeAfter(LocalDateTime current){
+        if (active && repeat && (current.isBefore(end) )){
+            LocalDateTime execution = start;
+            while( current.isAfter(execution)){
+                execution = execution.plusNanos(interval.getNano());
+                execution = execution.plusSeconds(interval.getSecond());
+                execution = execution.plusMinutes(interval.getMinute());
+                execution = execution.plusHours(interval.getHour());
+                //interval have not correct function
+                //execution = execution.plusDays(interval.getDayOfMonth());
+                //execution = execution.plusMonths(interval.getMonthValue());
+                //execution = execution.plusYears(interval.getYear());
             }
             return execution;
-        }else if (active && !repeat && current <= time ) {
+        }else if (active && !repeat && current.isBefore(time)) {
             return time;
         }else{
-            return -1;
+            return null;
         }
     }
 
@@ -191,15 +218,23 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "title='" + title + '\'' +
-                ", time=" + time +
-                ", start=" + start +
-                ", end=" + end +
-                ", interval=" + interval +
-                ", active=" + active +
-                ", repeat=" + repeat +
-                '}';
+        if(repeat){
+            return "Task{" +
+                    "title='" + title + '\'' +
+                    ", start=" + start +
+                    ", end=" + end +
+                    ", interval=" + interval +
+                    ", active=" + active +
+                    ", repeat=" + true +
+                    '}';
+        }else{
+            return "Task{" +
+                    "title='" + title + '\'' +
+                    ", time=" + time +
+                    ", active=" + active +
+                    ", repeat=" + false +
+                    '}';
+        }
     }
 
     @Override
