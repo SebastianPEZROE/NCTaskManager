@@ -13,9 +13,11 @@ import java.util.stream.Stream;
  * range of time.
  */
 public class LinkedTaskList extends AbstractTaskList{
-    private Node node;      //are the rest nodes in the list
-    private Node head;      //is the begging  node of the list
     public int size = 0;
+    private Node head;      //is the begging  node of the list
+    private Node node;      //are the rest nodes in the list
+
+
 
     /**
      * This class is used to create a node or box where
@@ -181,10 +183,11 @@ public class LinkedTaskList extends AbstractTaskList{
 
     @Override
     public String toString() {
-        return "LinkedTaskList{" +
-                "head=" + head +
-                ", next node=" + node +
-                '}';
+        String output = "LinkedTaskList{ size: " +size +", ";
+        for(Node n = head; n!= null;n = n.next){
+            output = output + n.taskStoring +",";
+        }
+        return output + "}";
     }
 
     @Override

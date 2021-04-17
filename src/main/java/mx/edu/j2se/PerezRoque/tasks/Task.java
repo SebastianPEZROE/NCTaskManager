@@ -1,5 +1,6 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAmount;
@@ -11,7 +12,7 @@ import java.util.Objects;
  *  name, the time, the status and more details of the task.
  * @version 1.0 17 feb 2021
  */
-public class Task {
+public class Task implements Serializable {
     private String title;       //reference of the task
     private LocalDateTime time;           //start time of non repetitive tasks
     private LocalDateTime start;          //start time of repetitive tasks
@@ -208,7 +209,24 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return time == task.time && start == task.start && end == task.end && interval == task.interval && repeat == task.repeat && Objects.equals(title, task.title);
+        return localEquals(time,task.time) && localEquals(start,task.start) && localEquals(end ,task.end)
+                && localEquals(interval,task.interval) && repeat == task.repeat && Objects.equals(title, task.title);
+    }
+
+    private boolean localEquals(LocalDateTime a, LocalDateTime b){
+        if(a== null && b== null){
+            return true;
+        }else if((a== null && b!=null) || (a!=null && b== null)){
+            return false;
+        }else{
+            return a.getYear() == b.getYear() &&
+                    a.getMonthValue() == b.getMonthValue() &&
+                    a.getDayOfMonth() == b.getDayOfMonth() &&
+                    a.getHour() == b.getHour() &&
+                    a.getMinute() == b.getMinute() &&
+                    a.getSecond() == b.getSecond() &&
+                    a.getNano() == b.getNano();
+        }
     }
 
     @Override

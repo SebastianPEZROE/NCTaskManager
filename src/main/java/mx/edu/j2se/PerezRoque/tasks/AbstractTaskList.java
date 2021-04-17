@@ -1,12 +1,13 @@
 package mx.edu.j2se.PerezRoque.tasks;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
 /**
  * in this class are the main functions of the tasks list
  */
-abstract class AbstractTaskList implements Iterable<Task>{
+abstract class AbstractTaskList implements Iterable<Task>, Serializable {
 
     protected abstract void add(Task task);
     protected abstract boolean remove(Task task);
